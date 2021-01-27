@@ -1,20 +1,23 @@
 #!/bin/bash
 
+sudo apt update
+sudo apt install mysql-server
+sudo mysql_secure_installation
 
 conn = sqlite3.connect(args.db_path)
 c = conn.cursor()
 
 cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion de la facturation " (
     "Factures"	TEXT,
-    "nom du "produit", TEXT
-    "référence" produit ("SKU"), INTEGER
-    "quantité" INTEGER
+    "nom du produit" TEXT,
+    "référence" produit ("SKU"), INTEGER,
+    "quantité" INTEGER,
     "prix à l'unité" INTEGER
 
     "Numero de la facture"	TEXT,
-    "CLIENT" TEXT
+    "CLIENT" TEXT,
     "DATE D'EMISSION"	INTEGER,
-    "MONTANT TOTAL
+    "MONTANT TOTAL" INTEGRER,
    
     );""")
 
@@ -30,10 +33,6 @@ sudo apt-get update -y
 echo "Installing bases packages"
 
 sudo apt-get install --yes git-extras python3-pip
-
-sudo apt update
-sudo apt install mysql-server
-sudo mysql_secure_installation
 
 
 ~/.ssh/authorized_keys du serveur
