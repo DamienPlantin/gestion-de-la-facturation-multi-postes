@@ -22,11 +22,11 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion de la facturation " (
     "nom du produit" TEXT,
     "référence" produit ("SKU"), INTEGER,
     "quantité" INTEGER,
-    "prix à l'unité" INTEGER
+    "prix à l unité" INTEGER
 
     "Numero de la facture"	TEXT,
     "CLIENT" TEXT,
-    "DATE D'EMISSION"	INTEGER,
+    "DATE D EMISSION"	INTEGER,
     "MONTANT TOTAL" INTEGRER,
    
     );""")
@@ -44,14 +44,5 @@ echo "Installing bases packages"
 
 sudo apt-get install --yes git-extras python3-pip
 
-
-/.ssh/authorized_keys du serveur
-	
-# Le port SSH par défaut est 22
-ssh-copy-id -i ~/.ssh/informatix.pub "<utilisateur>@<hote> -p <port>"
- 
-# ou si ça ne fonctionne pas
- 
-cat ~/.ssh/informatix.pub | ssh <utilisateur>@<hote> 'cat >> ~/.ssh/authorized_keys'
 
 
