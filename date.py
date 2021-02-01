@@ -14,20 +14,11 @@ import mysql.connector
 # ch.setFormatter(formatter)
 # logger.addHandler(ch)
 
-sudo myvenv/bin/pip install --upgrade pip
-sudo apt update
-sudo apt install mysql-server
-sudo mysql_secure_installation
 
-sudo mysql
-test_user@localhost:~ yoyo
-SET PASSWORD FOR root@localhost=PASSWORD('')
-root@localhost:~ mysql -u root -p
-mysql> CREATE DATABASE testing
-mysql> GRANT ALL PRIVILEGES ON testing.* TO test_user@localhost IDENTIFIED BY 'test_pass'
 
 parser = argparse.ArgumentParser("Script to interact with data from the Facturation")
 
+parser.add_argument("-au", "--ajouter_user", help="ajouter un utilisateur à mysql")
 parser.add_argument("-ac", "--ajouter_client", nargs="*", help="Ajouter un client avec les infos nécéssaires")
 parser.add_argument("-af", "--ajouter_facture", nargs="*", help="Ajouter une facture à la base de donnee")
 parser.add_argument("-m", "--modifier_client", help="Modifier les infos du client")
@@ -35,14 +26,14 @@ parser.add_argument("-r", "--rechercher_client", nargs="*", help="Rechercher un 
 parser.add_argument("-f", "--rechercher_facture", help="rechercher une facture avec son numero")
 parser.add_argument("-fs", "--factures", nargs="*", help="afficher toutes les factures entre deux dates")
 parser.add_argument("-s", "--suprimmer", nargs="*", help="Suprimmer des informations de la base de donnée")
-
+parser.add_argument("-t", "--total", help="Afficher le total des factures par défauts")
 args = parser.parse_args()
 
 conn = mysql.connector.connect(host="localhost", user = "root", password = "",database = "GESTION")
 cursor = conn.cursor()
 # conn.close()
 
-
+addu = args.ajouter_user
 addc = args.ajouter_client
 addf = args.ajouter_facture
 modc = args.modifier_client
@@ -51,9 +42,18 @@ rechf = args.rechercher_facture
 affs = args.factures
 sup = args.suprimmer
 
-# def add_user():             
-#     #Créé un utilisateur 
-#     cursor.execute('CREATE USER 'buzut'@'localhost' IDENTIFIED BY 'XXXX'');
+try:
+    connection = mysql.connector.connect(host='172.20.10.4', #adresse ip vm
+                                         database='GESTION',
+                                         user='shadowleader',
+                                         password='Ardkordu30')
+
+except mysql.connector.Error as error:
+    print("Les tables n'ont pas été créer dans MySQL: {}".format(error))
+
+def add_user():             
+    #Créé un utilisateur 
+    cursor.execute("""CREATE USER '?' IDENTIFIED WITH auth_socket""", (addu))
 # def user_connect():
 #     cursor.execute('SELECT user, host, plugin, authentication_string FROM mysql.user)
 
@@ -91,9 +91,10 @@ def date():
         print(factures)
 
 def main():
-    #Création des tables de gestion client et facture
+    #Création de la db, des tables de gestion client et facture
+    
     cursor.execute("""CREATE DATABASE 'GESTION' """)
-    cursor.execute("""USE Gestion""")
+    cursor.execute("""USE GESTION""")
     cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_client" (
     "TYPE_DE_CLIENT" TEXT,
     "RAISON_SOCIALE" TEXT,
