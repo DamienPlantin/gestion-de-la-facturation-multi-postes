@@ -1,9 +1,9 @@
-import mysql.connector
 import argparse
 import sys
+import mysql.connector
 
 
-# logger = logging.getLogger('Transport')
+# logger = logging.getLogger('Date')
 # logger.setLevel(logging.DEBUG)
 
 # ch = logging.StreamHandler()
@@ -14,16 +14,17 @@ import sys
 # ch.setFormatter(formatter)
 # logger.addHandler(ch)
 
-# sudo apt update
-# sudo apt install mysql-server
-# sudo mysql_secure_installation
+sudo myvenv/bin/pip install --upgrade pip
+sudo apt update
+sudo apt install mysql-server
+sudo mysql_secure_installation
 
-# sudo mysql
-# test_user@localhost:~$ su 
-# SET PASSWORD FOR root@localhost=PASSWORD('azerty');
-# root@localhost:~ mysql -u root -p
-# # mysql> CREATE DATABASE testing
-# # mysql> GRANT ALL PRIVILEGES ON testing.* TO test_user@localhost IDENTIFIED BY 'test_pass'
+sudo mysql
+test_user@localhost:~ yoyo
+SET PASSWORD FOR root@localhost=PASSWORD('')
+root@localhost:~ mysql -u root -p
+mysql> CREATE DATABASE testing
+mysql> GRANT ALL PRIVILEGES ON testing.* TO test_user@localhost IDENTIFIED BY 'test_pass'
 
 parser = argparse.ArgumentParser("Script to interact with data from the Facturation")
 
@@ -36,7 +37,8 @@ parser.add_argument("-fs", "--factures", nargs="*", help="afficher toutes les fa
 parser.add_argument("-s", "--suprimmer", nargs="*", help="Suprimmer des informations de la base de donnée")
 
 args = parser.parse_args()
-conn = mysql.connect("Facture2.db")
+
+conn = mysql.connector.connect(host="localhost", user = "root", password = "",database = "GESTION")
 cursor = conn.cursor()
 # conn.close()
 
@@ -64,32 +66,34 @@ def add_facture():
     #Ajouter une facture à la bdd
 
     cursor.execute('INSERT INTO gestion_facture (NOM_DU_PRODUIT, REFERENCE, QUANTITE, PRIX_UNITE, N_FACTURE, CLIENT,DATE_EMISSION,MONTANT_TOTAL ) VALUES (?,?,?,?,?,?,?,?)', (addf[0],addf[1],addf[2],addf[3], addf[4], addf[5],addf[6],addf[7]))
-    cursor.execute("""SELECT DATE_FORMAT({addf[6]}, '%Y %c %e')""")
+   
 
 def rech_factures():
     # rechercher une facture avec le numéro dans la bdd
 
-    cursor.execute('SELECT N_FACTURE FROM gestion_facture', (rechf))
+    cursor.execute("""SELECT N_FACTURE FROM gestion_facture WHERE '?' """, (rechf))
 
 def rech_client(): 
     #rechercher un client avec son nom et/ou son mail
 
-    cursor.execute('SELECT ? AND ? FROM gestion_client', (rechc[0], rechc[1]))
+    cursor.execute("""SELECT RAISON_SOCIAL AND EMAIL FROM gestion_client WHERE '?' AND '?' """, (rechc[0], rechc[1]))
 
 def modif_client():
     #Modifier les infos d'un client
-    cursor.execute('UDPDATE gestion_client SET ? = ? WHERE ?', (modc[0], modc[1], modc[3]))
+    cursor.execute("""UDPDATE gestion_client SET '?' = '?' WHERE '?' """, (modc[0], modc[1], modc[3]))
 
 def date():
     #Ajouter une date à la facturation
     
-    cursor.execute("SELECT * FROM gestion_facture WHERE DATE_EMISSION BETWEEN '?' AND '?' ", (affs[0],affs[1]))
+    cursor.execute("""SELECT * FROM gestion_facture WHERE DATE_EMISSION BETWEEN '?' AND '?' """, (affs[0],affs[1]))
     for i in cursor.fetchall():
         factures = (f'NOM_DU_PRODUIT{i[0]} REFERENCE{i[1]} QUANTITE{i[2]} PRIX_UNITE{[3]} N_FACTURE{i[4]} CLIENT{i[5]} DATE_EMISSION{i[6]} MONTANT_TOTAL{i[7]}')
         print(factures)
 
 def main():
-
+    #Création des tables de gestion client et facture
+    cursor.execute("""CREATE DATABASE 'GESTION' """)
+    cursor.execute("""USE Gestion""")
     cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_client" (
     "TYPE_DE_CLIENT" TEXT,
     "RAISON_SOCIALE" TEXT,
@@ -106,9 +110,10 @@ def main():
 
     "N_FACTURE" TEXT,
     "CLIENT" TEXT,
-    "DATE_EMISSION"	INTEGER,
+    "DATE_EMISSION"	DATE,
     "MONTANT_TOTAL" INTEGER
     );""")
+
 
     if addc:
         add_client()
