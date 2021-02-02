@@ -29,8 +29,8 @@ parser.add_argument("-s", "--suprimmer", nargs="*", help="Suprimmer des informat
 parser.add_argument("-t", "--total", help="Afficher le total des factures par défauts")
 args = parser.parse_args()
 
-conn = mysql.connector.connect(host="localhost", user = "root", password = "",database = "GESTION")
-cursor = conn.cursor()
+# conn = mysql.connector.connect(host="localhost", user = "root", password = "",database = "GESTION")
+
 # conn.close()
 
 addu = args.ajouter_user
@@ -42,14 +42,14 @@ rechf = args.rechercher_facture
 affs = args.factures
 sup = args.suprimmer
 
-try:
-    connection = mysql.connector.connect(host='172.20.10.4', #adresse ip vm
-                                         database='GESTION',
-                                         user='shadowleader',
-                                         password='Ardkordu30')
+conn = mysql.connector.connect(host='192.168.168.19', database='GESTION', user='yoyo34', password='AzErTy123*')
+cursor = conn.cursor()
+# try:
+#     conn = mysql.connector.connect(host='3306', database='GESTION', user='root', password='Ardkordu30')
+#     cursor = conn.cursor()
 
-except mysql.connector.Error as error:
-    print("Les tables n'ont pas été créer dans MySQL: {}".format(error))
+# except mysql.connector.Error as error:
+#     print("Les tables n'ont pas été créer dans MySQL: {}".format(error))
 
 def add_user():             
     #Créé un utilisateur 
@@ -90,10 +90,12 @@ def date():
         factures = (f'NOM_DU_PRODUIT{i[0]} REFERENCE{i[1]} QUANTITE{i[2]} PRIX_UNITE{[3]} N_FACTURE{i[4]} CLIENT{i[5]} DATE_EMISSION{i[6]} MONTANT_TOTAL{i[7]}')
         print(factures)
 
+
+
 def main():
     #Création de la db, des tables de gestion client et facture
     
-    cursor.execute("""CREATE DATABASE 'GESTION' """)
+    cursor.execute("""CREATE DATABASE GESTION""")
     cursor.execute("""USE GESTION""")
     cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_client" (
     "TYPE_DE_CLIENT" TEXT,
@@ -120,7 +122,6 @@ def main():
         add_client()
     if addf:
         add_facture()
-    conn.commit()
     if affs:
         date()
     if rechf:
