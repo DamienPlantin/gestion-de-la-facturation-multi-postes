@@ -37,14 +37,14 @@ args = parser.parse_args()
 
 addu = args.ajouter_user
 addc = args.ajouter_client
-addl = args.ajouter_ligne
+# addl = args.ajouter_ligne
 addf = args.ajouter_facture
 modc = args.modifier_client
 rechc = args.rechercher_client 
 rechf = args.rechercher_facture 
 betf = args.factures
-supp = args.suprimmer
-remi = args.remise
+supp = args.supprimer
+# remi = args.remise
 # sup = args.suprimmer
 
 conn = mysql.connector.connect(host='192.168.242.195', database='GESTION', user='employer', password='AzErTy123*')
@@ -115,6 +115,11 @@ def main():
     #Création de la db, des tables de gestion client et facture
     
     cursor.execute("""CREATE DATABASE GESTION""")
+    #Créé un utilisateur 
+    cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
+    conn = mysql.connector.connect(host='192.168.242.195', database='GESTION', user='employer', password='AzErTy123*')
+    cursor = conn.cursor()
+
     cursor.execute("""USE GESTION""")
     cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_client" (
     "TYPE_DE_CLIENT" TEXT,
