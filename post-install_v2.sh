@@ -37,7 +37,10 @@ cat mysql_config.txt | sudo -S mysql_secure_installation
 echo "[[[UPLOAD SCRIPT .SQL]]]"
 sudo mysql < ./Script_mysql.sql
 #Applique le script.sql pour la création de la BdD
-sudo sed -i "s/127.0.0.1/192.168.1.21/" /etc/mysql/mysql.conf.d/mysqld.cnf
+
+echo "Updating mysql configs in /etc/mysql/mysql.conf.d/mysqld.cnf."
+sudo sed -i 's/^bind-address.*/bind-address = 192.168.1.21/' /etc/mysql/mysql.conf.d/mysqld.cnf
+echo "Updated mysql bind address in /etc/mysql/mysql.conf.d/mysqld.cnf to 0.0.0.0 to allow external connections."
 #Applique une adresse ip au service mysql pour communiquer
 sudo systemctl restart mysql
 #redémarre le service mysql
