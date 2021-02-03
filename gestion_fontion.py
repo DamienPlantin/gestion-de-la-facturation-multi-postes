@@ -52,49 +52,47 @@ supp = args.supprimer
 
 def add_client(cursor):
 #Ajouter les informations d'un client
-logging.info("lancement de la fonction d'ajout de client")
-
-cursor.execute("""INSERT INTO Clients VALUES (%s,%s,%s,%s,%s,%s,%s,%s);""", (addc[0], addc[1], addc[2], addc[3], addc[4], addc[5], addc[6], addc[7]))
-
-return 0
+    cursor.execute("""INSERT INTO Clients VALUES (%s,%s,%s,%s,%s,%s,%s,%s);""", (addc[0], addc[1], addc[2], addc[3], addc[4], addc[5], addc[6], addc[7]))
+    logging.info("lancement de la fonction d'ajout de client")
+    return 0
 
 def add_facture(cursor):
-#Ajouter une ligne facture à la bdd
-
-cursor.execute('INSERT INTO Facture (id_Clients, n_Facture, DATE_EMISSION) VALUES (%s,%s,%s)', (addl[0], addl[1], addl[2]))
-return 0
+    #Ajouter une ligne facture à la bdd
+    cursor.execute('INSERT INTO Facture (id_Clients, n_Facture, DATE_EMISSION) VALUES (%s,%s,%s)', (addl[0], addl[1], addl[2]))
+    logging.info("lancement de la fonction d'ajout de facture ")
+    return 0
 
 def add_ligne(cursor):
 #Ajouter une facture détaille à la bdd
-
-cursor.execute('INSERT INTO Lignes (NOM_DU_PRODUIT, REFERENCE, QUANTITE, PRIX_UNITE) VALUES (%s;%s,%s,%s)', (addf[0],addf[1],addf[2],addf[3]))
-return 0
+    cursor.execute('INSERT INTO Lignes (NOM_DU_PRODUIT, REFERENCE, QUANTITE, PRIX_UNITE) VALUES (%s;%s,%s,%s)', (addf[0],addf[1],addf[2],addf[3]))
+    logging.info("lancement de la fonction d'ajout de produit")
+    return 0
 
 def rech_factures(cursor):
 # rechercher une facture avec le numéro dans la bdd
-
-cursor.execute("""SELECT n_Facture FROM Facture WHERE '%s' """, (rechf))
-return 0
+    cursor.execute("""SELECT n_Facture FROM Facture WHERE '%s' """, (rechf))
+    logging.info("lancement de la fonction recherche facture")
+    return 0
 
 def rech_client(cursor): 
 #rechercher un client avec son nom et/ou son mail
-
-cursor.execute("""SELECT RAISON_SOCIAL AND EMAIL FROM Clients WHERE '%s' AND '%s' """, (rechc[0], rechc[1]))
-return 0
+    cursor.execute("""SELECT RAISON_SOCIAL AND EMAIL FROM Clients WHERE '%s' AND '%s' """, (rechc[0], rechc[1]))
+    logging.info("lancement de la fonction recherche client")
+    return 0
 
 def modif_client(cursor):
 #Modifier les infos d'un client
-
-cursor.execute("""UDPDATE Clients SET '%s' = '%s' WHERE '%s' """, (modc[0], modc[1], modc[3]))
-return 0
+    cursor.execute("""UDPDATE Clients SET '%s' = '%s' WHERE '%s' """, (modc[0], modc[1], modc[3]))
+    logging.info("lancement de la fonction modifier client")
+    return 0
 
 def between_date(cursor):
 #Ajouter une date à la facturation
-
-cursor.execute("""SELECT * FROM Facture WHERE DATE_EMISSION BETWEEN '%s' AND '%s' """, (betf[0],betf[1]))
-for i in cursor.fetchall():
-    factures = (f'id_Clients{i[0]} n_Facture{i[1]} DATE_EMISSION{i[2]} MONTANT_TOTAL{i[3]}')
-    print(factures)
+    cursor.execute("""SELECT * FROM Facture WHERE DATE_EMISSION BETWEEN '%s' AND '%s' """, (betf[0],betf[1]))
+    for i in cursor.fetchall():
+        factures = (f'id_Clients{i[0]} n_Facture{i[1]} DATE_EMISSION{i[2]} MONTANT_TOTAL{i[3]}')
+        print(factures)
+    logging.info("lancement de la fonction qui ajoute une date a la facture")
 
 # def montant_total():
 #     Total = []
@@ -106,66 +104,58 @@ for i in cursor.fetchall():
 
 def remise():
 #Ajouter une remise pour la déduire sur le prix
-remise = (remi)*100/result
-return 0
+    remise = (remi)*100/result
+    return 0
 
 def supprimer(cursor):
 #Supprimer une ligne dans la bdd
-cursor.execute("""DELETE FROM `'%s' `WHERE '%s'""", (supr[0], supr[1]))
-return 0
+    cursor.execute("""DELETE FROM `'%s' `WHERE '%s'""", (supr[0], supr[1]))
+    return 0
 
 
 def main():
 #Création de la db, des tables de gestion client et facture
 
-# cursor.execute("""CREATE DATABASE GESTION""")
-#Créé un utilisateur 
-# cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
-conn = mysql.connector.connect(host='192.168.1.133', database='Gestion', user='stephanie', password='AzErTy123*')
-c = conn.cursor()
+    # cursor.execute("""CREATE DATABASE GESTION""")
+    #Créé un utilisateur 
+    # cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
+    conn = mysql.connector.connect(host='192.168.1.133', database='Gestion', user='stephanie', password='AzErTy123*')
+    c = conn.cursor()
 
-# cursor.execute("""USE GESTION""")
-# cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_client" (
-# "TYPE_DE_CLIENT" TEXT,
-# "RAISON_SOCIALE" TEXT,
-# "EMAIL" TEXT,
-# "TELEPHONE" INTEGER,
-# "ADRESSE" INTEGER
-# );""")
+    # cursor.execute("""USE GESTION""")
+    # cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_client" (
+    # "TYPE_DE_CLIENT" TEXT,
+    # "RAISON_SOCIALE" TEXT,
+    # "EMAIL" TEXT,
+    # "TELEPHONE" INTEGER,
+    # "ADRESSE" INTEGER
+    # );""")
 
-# cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_ligne" (
-# "NOM_DU_PRODUIT" TEXT,
-# "REFERENCE" INTEGER,
-# "QUANTITE" INTEGER,
-# "PRIX_UNITE" INTEGER,
-# );""")
+    # cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_ligne" (
+    # "NOM_DU_PRODUIT" TEXT,
+    # "REFERENCE" INTEGER,
+    # "QUANTITE" INTEGER,
+    # "PRIX_UNITE" INTEGER,
+    # );""")
 
-# cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_facture"(
-# "N_FACTURE" TEXT,
-# "CLIENT" TEXT,
-# "DATE_EMISSION"	DATE,
-# "MONTANT_TOTAL" INTEGER
-# );""")
+    # cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_facture"(
+    # "N_FACTURE" TEXT,
+    # "CLIENT" TEXT,
+    # "DATE_EMISSION"	DATE,
+    # "MONTANT_TOTAL" INTEGER
+    # );""")
 
-
-
-
-if addc:
-    add_client(c)
-if addf:
-    add_facture(c)
-if betf:
-    between_date(c)
-if rechf:
-    rech_factures(c)
-if rechc:
-    rech_client(c)
-conn.commit()
-
-
-
-
-
+    if addc:
+        add_client(c)
+    if addf:
+        add_facture(c)
+    if betf:
+        between_date(c)
+    if rechf:
+        rech_factures(c)
+    if rechc:
+        rech_client(c)
+    conn.commit()
 
 if __name__ == "__main__":
 sys.exit(main())
