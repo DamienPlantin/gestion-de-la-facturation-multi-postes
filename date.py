@@ -1,22 +1,15 @@
 import argparse
 import sys
 import mysql.connector
+import logging
 
 
 
-# logger = logging.getLogger('Date')
-# logger.setLevel(logging.DEBUG)
-
-# ch = logging.StreamHandler()
-# ch = logging.FileHandler('Log.txt', encoding='utf-8')
-# ch.setLevel(logging.DEBUG)
-
-# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%d/%m/%Y %I:%M:%S %p')
-# ch.setFormatter(formatter)
-# logger.addHandler(ch)
+logging.basicConfig(filename="logfacture.log", level=logging.DEBUG,
+ format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 
-
+logging.debug("on ouvre le dossier et on met en place les arguments")
 parser = argparse.ArgumentParser("Script to interact with data from the Facturation")
 
 parser.add_argument("-au", "--ajouter_user", help="ajouter un utilisateur à mysql")
@@ -34,33 +27,35 @@ args = parser.parse_args()
 # conn = mysql.connector.connect(host="localhost", user = "root", password = "",database = "GESTION")
 
 # conn.close()
-
+logging.debug("on définit des variables pour mieux s'y retrouver dans nos arguments")
 addu = args.ajouter_user
 addc = args.ajouter_client
-# addl = args.ajouter_ligne
+#addl = args.ajouter_ligne
 addf = args.ajouter_facture
 modc = args.modifier_client
 rechc = args.rechercher_client 
 rechf = args.rechercher_facture 
 betf = args.factures
 supp = args.supprimer
-# remi = args.remise
-# sup = args.suprimmer
+#remi = args.remise
+#sup = args.suprimmer
 
 # conn = mysql.connector.connect(host='192.168.242.195', database='GESTION', user='employer', password='AzErTy123*')
 # cursor = conn.cursor()
 
-def add_user(cursor):             
-    #Créé un utilisateur 
-    cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
-    return 0
-# def user_connect():
-#     cursor.execute('SELECT user, host, plugin, authentication_string FROM mysql.user)
+# def add_user(cursor):             
+#     #Créé un utilisateur 
+#     cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
+#     return 0
+# # def user_connect():
+# #     cursor.execute('SELECT user, host, plugin, authentication_string FROM mysql.user)
 
 def add_client(cursor):
     #Ajouter les informations d'un client
+    logging.info("lancement de la fonction d'ajout de client")
 
     cursor.execute("""INSERT INTO Clients VALUES (%s,%s,%s,%s,%s,%s,%s,%s);""", (addc[0], addc[1], addc[2], addc[3], addc[4], addc[5], addc[6], addc[7]))
+
     return 0
 
 def add_ligne(cursor):
@@ -126,7 +121,7 @@ def main():
     # cursor.execute("""CREATE DATABASE GESTION""")
     #Créé un utilisateur 
     # cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
-    conn = mysql.connector.connect(host='192.168.1.21', database='Gestion', user='damien', password='AzErTy123*')
+    conn = mysql.connector.connect(host='192.168.1.133', database='Gestion', user='stephanie', password='AzErTy123*')
     c = conn.cursor()
 
     # cursor.execute("""USE GESTION""")
@@ -151,7 +146,7 @@ def main():
     # "DATE_EMISSION"	DATE,
     # "MONTANT_TOTAL" INTEGER
     # );""")
-
+    
 
 
 
