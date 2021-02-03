@@ -50,12 +50,6 @@ supp = args.supprimer
 conn = mysql.connector.connect(host='192.168.239.195', database='Gestion', user='employer', password='AzErTy123*')
 cursor = conn.cursor()
 
-# def add_user():             
-#     #Créé un utilisateur 
-#     cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
-# def user_connect():
-#      cursor.execute('SELECT user, host, plugin, authentication_string FROM mysql.user)
-
 def add_client():
     #Ajouter les informations d'un client
 
@@ -91,7 +85,7 @@ def between_date():
 
     cursor.execute("""SELECT * Factures WHERE DATE_EMISSION BETWEEN '?' AND '?' """, (betf[0],betf[1]))
     for i in cursor.fetchall():
-        factures = (f'NOM_DU_PRODUIT{i[0]} REFERENCE{i[1]} QUANTITE{i[2]} PRIX_UNITE{[3]} N_FACTURE{i[4]} CLIENT{i[5]} DATE_EMISSION{i[6]} MONTANT_TOTAL{i[7]}')
+        factures = (f'N_FACTURE{i[0]} CLIENT{i[1]} DATE_EMISSION{i[2]}')
         print(factures)
 
 # def montant_total():
@@ -117,8 +111,8 @@ def main():
     # cursor.execute("""CREATE DATABASE GESTION""")
     # #Créé un utilisateur 
     # cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
-    conn = mysql.connector.connect(host='192.168.239.195', database='GESTION', user='employer', password='AzErTy123*')
-    cursor = conn.cursor()
+    # conn = mysql.connector.connect(host='192.168.239.195', database='GESTION', user='employer', password='AzErTy123*')
+    # cursor = conn.cursor()
 
     # cursor.execute("""USE GESTION""")
     # cursor.execute("""CREATE TABLE IF NOT EXISTS "Clients" (
