@@ -45,51 +45,51 @@ rechf = args.rechercher_facture
 betf = args.factures
 supp = args.supprimer
 # remi = args.remise
-# sup = args.suprimmer
+# supp = args.suprimmer
 
-conn = mysql.connector.connect(host='192.168.242.195', database='GESTION', user='employer', password='AzErTy123*')
+conn = mysql.connector.connect(host='192.168.239.195', database='Gestion', user='employer', password='AzErTy123*')
 cursor = conn.cursor()
 
-def add_user():             
-    #Créé un utilisateur 
-    cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
+# def add_user():             
+#     #Créé un utilisateur 
+#     cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
 # def user_connect():
-#     cursor.execute('SELECT user, host, plugin, authentication_string FROM mysql.user)
+#      cursor.execute('SELECT user, host, plugin, authentication_string FROM mysql.user)
 
 def add_client():
     #Ajouter les informations d'un client
 
-    cursor.execute('INSERT INTO gestion_client (TYPE_DE_CLIENT, RAISON_SOCIALE, EMAIL, TELEPHONE, ADRESSE ) VALUES (?,?,?,?,?)', (addc[0],addc[1], addc[2], addc[3], addc[4]))
+    cursor.execute('INSERT INTO Clients (TYPE_DE_CLIENT, RAISON_SOCIALE, EMAIL, TELEPHONE, ADRESSE, CODE_POSTAL, VILLE ) VALUES (?,?,?,?,?,?,?)', (addc[0],addc[1], addc[2], addc[3], addc[4], addc[5], addc[6]))
 
 def add_ligne():
     #Ajouter une ligne facture à la bdd
 
-    cursor.execute('INSERT INTO gestion_client (N_FACTURE, CLIENT,DATE_EMISSION) VALUES (?,?,?)', (addl[0], addl[1], addl[2]))
+    cursor.execute('INSERT INTO Lignes (N_FACTURE, CLIENT,DATE_EMISSION) VALUES (?,?,?)', (addl[0], addl[1], addl[2]))
 
 def add_facture():
     #Ajouter une facture détaille à la bdd
 
-    cursor.execute('INSERT INTO gestion_facture (NOM_DU_PRODUIT, REFERENCE, QUANTITE, PRIX_UNITE) VALUES (?,?,?,?)', (addf[0],addf[1],addf[2],addf[3]))
+    cursor.execute('INSERT INTO Factures (NOM_DU_PRODUIT, REFERENCE, QUANTITE, PRIX_UNITE) VALUES (?,?,?,?)', (addf[0],addf[1],addf[2],addf[3]))
 
-def rech_factures():
+def rech_facture():
     # rechercher une facture avec le numéro dans la bdd
 
-    cursor.execute("""SELECT N_FACTURE FROM gestion_ligne WHERE '?' """, (rechf))
+    cursor.execute("""SELECT N_FACTURE FROM Lignes WHERE '?' """, (rechf))
 
 def rech_client(): 
     #rechercher un client avec son nom et/ou son mail
 
-    cursor.execute("""SELECT RAISON_SOCIAL AND EMAIL FROM gestion_client WHERE '?' AND '?' """, (rechc[0], rechc[1]))
+    cursor.execute("""SELECT RAISON_SOCIAL AND EMAIL FROM Clients WHERE '?' AND '?' """, (rechc[0], rechc[1]))
 
 def modif_client():
     #Modifier les infos d'un client
 
-    cursor.execute("""UDPDATE gestion_client SET '?' = '?' WHERE '?' """, (modc[0], modc[1], modc[3]))
+    cursor.execute("""UDPDATE Clients SET '?' = '?' WHERE '?' """, (modc[0], modc[1], modc[3]))
 
 def between_date():
     #Ajouter une date à la facturation
 
-    cursor.execute("""SELECT * FROM gestion_facture WHERE DATE_EMISSION BETWEEN '?' AND '?' """, (betf[0],betf[1]))
+    cursor.execute("""SELECT * Factures WHERE DATE_EMISSION BETWEEN '?' AND '?' """, (betf[0],betf[1]))
     for i in cursor.fetchall():
         factures = (f'NOM_DU_PRODUIT{i[0]} REFERENCE{i[1]} QUANTITE{i[2]} PRIX_UNITE{[3]} N_FACTURE{i[4]} CLIENT{i[5]} DATE_EMISSION{i[6]} MONTANT_TOTAL{i[7]}')
         print(factures)
@@ -108,40 +108,40 @@ def remise():
 
 def supprimer():
     #Supprimer une ligne dans la bdd
-    cursor.execute("""DELETE FROM `'?' `WHERE '?'""", (supr[0], supr[1]))
+    cursor.execute("""DELETE FROM '?' WHERE '?'""", (supp[0], supp[1]))
     
 
 def main():
     #Création de la db, des tables de gestion client et facture
     
-    cursor.execute("""CREATE DATABASE GESTION""")
-    #Créé un utilisateur 
-    cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
-    conn = mysql.connector.connect(host='192.168.242.195', database='GESTION', user='employer', password='AzErTy123*')
+    # cursor.execute("""CREATE DATABASE GESTION""")
+    # #Créé un utilisateur 
+    # cursor.execute("""CREATE USER '?' IDENTIFIED WITH mysql_native_password""", (addu))
+    conn = mysql.connector.connect(host='192.168.239.195', database='GESTION', user='employer', password='AzErTy123*')
     cursor = conn.cursor()
 
-    cursor.execute("""USE GESTION""")
-    cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_client" (
-    "TYPE_DE_CLIENT" TEXT,
-    "RAISON_SOCIALE" TEXT,
-    "EMAIL" TEXT,
-    "TELEPHONE" INTEGER,
-    "ADRESSE" INTEGER
-    );""")
+    # cursor.execute("""USE GESTION""")
+    # cursor.execute("""CREATE TABLE IF NOT EXISTS "Clients" (
+    # "TYPE_DE_CLIENT" TEXT,
+    # "RAISON_SOCIALE" TEXT,
+    # "EMAIL" TEXT,
+    # "TELEPHONE" INTEGER,
+    # "ADRESSE" INTEGER
+    # );""")
 
-    cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_ligne" (
-    "NOM_DU_PRODUIT" TEXT,
-    "REFERENCE" INTEGER,
-    "QUANTITE" INTEGER,
-    "PRIX_UNITE" INTEGER,
-    );""")
+    # cursor.execute("""CREATE TABLE IF NOT EXISTS "Lignes" (
+    # "NOM_DU_PRODUIT" TEXT,
+    # "REFERENCE" INTEGER,
+    # "QUANTITE" INTEGER,
+    # "PRIX_UNITE" INTEGER,
+    # );""")
 
-    cursor.execute("""CREATE TABLE IF NOT EXISTS "gestion_facture"(
-    "N_FACTURE" TEXT,
-    "CLIENT" TEXT,
-    "DATE_EMISSION"	DATE,
-    "MONTANT_TOTAL" INTEGER
-    );""")
+    # cursor.execute("""CREATE TABLE IF NOT EXISTS "Factures"(
+    # "N_FACTURE" TEXT,
+    # "CLIENT" TEXT,
+    # "DATE_EMISSION"	DATE,
+    # "MONTANT_TOTAL" INTEGER
+    # );""")
 
 
 
