@@ -101,7 +101,7 @@ pause
 
 ::Exécution du script
 ssh -t %login%@%ip% "sudo ./%name_script_sh%"
-echo ///installation des dernière MaJ, ainsi que d'autres option\\\
+echo ///installation des dernière MaJ, ainsi que d'autres option terminées\\\
 pause
 
 ssh %login%@%ip%
