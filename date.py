@@ -55,20 +55,20 @@ def add_client():
 
     cursor.execute('INSERT INTO Clients (TYPE_DE_CLIENT, RAISON_SOCIALE, EMAIL, TELEPHONE, ADRESSE, CODE_POSTAL, VILLE ) VALUES (?,?,?,?,?,?,?)', (addc[0],addc[1], addc[2], addc[3], addc[4], addc[5], addc[6]))
 
-def add_ligne():
+def add_facture():
     #Ajouter une ligne facture à la bdd
 
-    cursor.execute('INSERT INTO Lignes (N_FACTURE, CLIENT,DATE_EMISSION) VALUES (?,?,?)', (addl[0], addl[1], addl[2]))
+    cursor.execute('INSERT INTO Lignes (id_Lignes, CLIENT,DATE_EMISSION) VALUES (?,?,?)', (addf[0], addf[1], addf[2]))
 
-def add_facture():
+def add_ligne():
     #Ajouter une facture détaille à la bdd
 
-    cursor.execute('INSERT INTO Factures (NOM_DU_PRODUIT, REFERENCE, QUANTITE, PRIX_UNITE) VALUES (?,?,?,?)', (addf[0],addf[1],addf[2],addf[3]))
+    cursor.execute('INSERT INTO Factures (NOM_DU_PRODUIT, REFERENCE, QUANTITE, PRIX_UNITE) VALUES (?,?,?,?)', (addl[0],addl[1],addl[2],addl[3]))
 
 def rech_facture():
     # rechercher une facture avec le numéro dans la bdd
 
-    cursor.execute("""SELECT N_FACTURE FROM Lignes WHERE '?' """, (rechf))
+    cursor.execute("""SELECT id_Lignes FROM Lignes WHERE '?' """, (rechf))
 
 def rech_client(): 
     #rechercher un client avec son nom et/ou son mail
