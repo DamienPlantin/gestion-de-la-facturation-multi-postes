@@ -9,8 +9,8 @@ Le programme est composé de 4 scripts:
 
 1] Le script.bat:
 
-Il permet de se connecter à la machine distante, la mettre à jour pour pouvoir y faciliter l'accès, on donne ensuite l'autorisation au dossier caché ssh pour
-créer le fichier 'authorized_keys' dans le dossier caché ssh. Ceci nous permet de copié le contenu d'un fichier vers un autre fichier dans la machine distante.
+Il permet de se connecter à la machine distante, la mettre à jour pour pouvoir y faciliter l'accès. Ceci nous permet de copié le contenu d'un fichier vers 
+un autre fichier dans la machine distante.
 
 2] Le script.sh:
 
