@@ -3,6 +3,19 @@
 ::Permet d'afficher les accents
 chcp 65001 > nul
 
+::-------------------------------------------------------------------------------------------------------------------
+:: INFORMATION IMPORTANTES
+::-------------------------------------------------------------------------------------------------------------------
+
+echo AVANT DE LANCER LE RESTE DU SCRIPT, PENSER A CHANGER L'@IP DU BIND ADDRESS DANS LE SCRIPT POST-INSTALL_V2.SH 
+pause
+echo.
+echo AVANT DE LANCER LE RESTE DU SCRIPT, PENSER A MODIFIER LE USER DANS SCRIPT_MYSQL.SQL AVEC VOTRE NOM ET L'@IP DE VOTRE MACHINE WINDOWS
+pause
+::-------------------------------------------------------------------------------------------------------------------
+:: INSTALLATION MYSQL-CONNECTOR PYTHON
+::-------------------------------------------------------------------------------------------------------------------
+
 ::Installation de la mise a jour de pip
 python -m pip install --upgrade pip
 ::Installation de la librairie mysql.connector
