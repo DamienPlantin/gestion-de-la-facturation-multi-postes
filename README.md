@@ -26,7 +26,7 @@ qui seront listé dans le dernier script.
 
 C'est lui qui va interagir avec la base de donnée et qui possède toutes les fonctionnalités du programme qui sont:
 - Enregistré un/des client(s), une/des ligne(s) ou une/des facture(s)
-- Apporter des modifications à une tables ou supprimer une/des lignes dans une table
+- Apporter des modifications à une table ou supprimer une/des lignes dans une table
 - Rechercher un client, une facture ou plusieurs factures émise entre deux dates
 - Calculer et afficher le montant_total d'une facture ainsi que le total de toutes les factures
 - Faire une remise sur le montant total d'une facture
